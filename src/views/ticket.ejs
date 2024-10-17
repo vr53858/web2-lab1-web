@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket <%= ticket.id %> Details</title>
+</head>
+<body>
+    <h1>Ticket Details for ID: <%= ticket.id %></h1>
+    <p><strong>First name:</strong> <%= ticket.first_name %></p>
+    <p><strong>Last name:</strong> <%= ticket.last_name %></p>
+    <p><strong>OIB:</strong> <%= ticket.vatin %></p>
+    <p><strong>Created At:</strong> <%= new Date(ticket.created_at).toLocaleString() %></p>
+</body>
+</html>
