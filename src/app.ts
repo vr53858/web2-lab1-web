@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 const { requiresAuth } = require('express-openid-connect');
 
 import dotenv from 'dotenv';
@@ -30,8 +30,13 @@ app.use(auth(config));
 
 app.use(express.json());
 
-app.get('/', (req : any, res : Response) => {
-    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+app.get('/', (req : any, res : Response, next : NextFunction) => {
+    // res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+    if (req.oidc.isAuthenticated() || req.path === '/login') {
+        next();
+    } else {
+        res.redirect('/login');
+    }
   });
 
 app.get('/', async (req: Request, res: Response) => {
