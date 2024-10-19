@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import ticketRoutes from './routes/ticketRoutes';
 import axios from 'axios';
 import path from 'path';
+import { getAccessToken } from './services/getAuth0AccessToken';
 const { auth } = require('express-openid-connect');
 
 dotenv.config();
@@ -41,7 +42,15 @@ app.get('/', (req : any, res : Response, next : NextFunction) => {
 
 app.get('/', async (req: Request, res: Response) => {
     try {
-        const response = await axios.get(`${API_URL}/tickets-count`);
+        const accessToken = await getAccessToken();
+
+        // Fetch ticket info from the external API with the access token
+        const response = await axios.get(`${process.env.API_URL}/tickets-count`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        
         const totalTickets = response.data.count;
 
         res.render('home', { totalTickets });
