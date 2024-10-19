@@ -10,7 +10,7 @@ const API_URL = process.env.API_URL;
 // Function to get an access token using Auth0 M2M Client Credentials
 async function getAccessToken() {
     try {
-        const response = await axios.post(process.env.AUTH0_TENANT_URL as string, {
+        const response = await axios.post(process.env.AUTH0_TENANT_TOKEN_URL as string, {
             client_id: process.env.CLIENT_ID,
             client_secret: process.env.SECRET,
             audience: API_URL,
