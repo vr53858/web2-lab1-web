@@ -40,7 +40,7 @@ app.get('/', (req : any, res : Response, next : NextFunction) => {
     }
   });
 
-app.get('/', async (req: Request, res: Response) => {
+app.get('/', requiresAuth(), async (req: Request, res: Response) => {
     try {
         const accessToken = await getAccessToken();
 
@@ -63,7 +63,7 @@ app.get('/profile', requiresAuth(), (req : any, res) => {
     res.send(JSON.stringify(req.oidc.user));
   });
 
-app.use('/ticket', ticketRoutes);
+app.use('/ticket', requiresAuth(), ticketRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
