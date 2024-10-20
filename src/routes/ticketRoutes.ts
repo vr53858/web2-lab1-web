@@ -23,8 +23,6 @@ router.get('/:id', async (req: any, res: Response) => {
 
         if (apiResponse.status === 200) {
             const ticketInfo : Ticket = apiResponse.data;
-
-            console.log(ticketInfo);
             
             res.render('ticket', { ticket: ticketInfo, user: userInfo});
         } else {
