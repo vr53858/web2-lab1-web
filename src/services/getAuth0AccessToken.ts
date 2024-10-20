@@ -5,7 +5,7 @@ export async function getAccessToken(): Promise<string> {
         const response = await axios.post(process.env.AUTH0_TENANT_TOKEN_URL as string, {
             client_id: process.env.CLIENT_ID,
             client_secret: process.env.SECRET,
-            audience: process.env.API_URL,
+            audience: process.env.AUDIENCE,
             grant_type: 'client_credentials'
         }, {
             headers: {
