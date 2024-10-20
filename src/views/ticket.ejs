@@ -11,5 +11,8 @@
     <p><strong>Last name:</strong> <%= ticket.last_name %></p>
     <p><strong>OIB:</strong> <%= ticket.vatin %></p>
     <p><strong>Created At:</strong> <%= new Date(ticket.created_at).toLocaleString() %></p>
+    <hr/>
+    <i>You are logged in as: <%= user.name></i>
+    <button onclick="location.href='/logout'">Log Out</button>
 </body>
 </html>

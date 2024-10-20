@@ -7,8 +7,9 @@ import { getAccessToken } from '../services/getAuth0AccessToken';
 dotenv.config();
 const router = Router();
 
-router.get('/:id', async (req: Request, res: Response) => {
+router.get('/:id', async (req: any, res: Response) => {
     const ticketId = req.params.id;
+    const userInfo = req.oidc.user;
 
     try {
         const accessToken = await getAccessToken();
@@ -25,7 +26,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 
             console.log(ticketInfo);
             
-            res.render('ticket', { ticket: ticketInfo});
+            res.render('ticket', { ticket: ticketInfo, user: userInfo});
         } else {
             res.status(404).send(`Ticket with ID ${ticketId} not found`);
         }

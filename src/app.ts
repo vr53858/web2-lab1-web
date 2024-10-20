@@ -31,16 +31,15 @@ app.use(auth(config));
 
 app.use(express.json());
 
-app.get('/', (req : any, res : Response, next : NextFunction) => {
-    // res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-    if (req.oidc.isAuthenticated() || req.path === '/login') {
-        next();
-    } else {
-        res.redirect('/login');
-    }
-  });
+// app.get('/', (req : any, res : Response, next : NextFunction) => {
+//     if (req.oidc.isAuthenticated() || req.path === '/login') {
+//         next();
+//     } else {
+//         res.redirect('/login');
+//     }
+//   });
 
-app.get('/', requiresAuth(), async (req: Request, res: Response) => {
+app.get('/', async (req: any, res: Response) => {
     try {
         const accessToken = await getAccessToken();
 
@@ -51,9 +50,10 @@ app.get('/', requiresAuth(), async (req: Request, res: Response) => {
             }
         });
         
-        const totalTickets = response.data.count;
+        const totalTicketsCnt = response.data.count;
+        const isAuthenticated = req.oidc.isAuthenticated();
 
-        res.render('home', { totalTickets });
+        res.render('home', { totalTickets:totalTicketsCnt, isLoggedIn: isAuthenticated});
     } catch (error) {
         res.status(500).send(`Error fetching ticket count: ${(error as Error).message}`);
     }
